@@ -6,3 +6,4 @@ def list_tasks(request):
 
 
 
+    return render(request, 'list_tasks.html')
