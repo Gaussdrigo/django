@@ -1,10 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+
 
 # Create your views here.
 def list_tasks(request):
-    return render(request, 'list_tasks.html')
-    return render(request, 'lits_tasks.html')
-
-
-
-    return render(request, 'list_tasks.html')
+    return render(request, "list_tasks.html")
