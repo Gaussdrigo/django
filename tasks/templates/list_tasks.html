@@ -19,36 +19,33 @@
     <div class="container my-4">
         <h1 class="text-center">Lista de Tareas</h1>
 
-        <!-- Agregar aquí el formulario para nuevas tareas -->
-        <form class="my-4">
+        <form method="post" action="{% url 'add_task' %}">
+            {% csrf_token %}
             <div class="mb-3">
                 <label for="taskName" class="form-label">Nombre de la Tarea</label>
-                <input type="text" class="form-control" id="taskName" placeholder="Escribe el nombre de la tarea">
+                <input type="text" class="form-control" id="taskName" name="task_name" placeholder="Escribe el nombre de la tarea" required>
+            </div>
+            <div class="mb-3">
+                <label for="taskDescription" class="form-label">Descripción de la Tarea</label>
+                <textarea class="form-control" id="taskDescription" name="task_description" rows="3" placeholder="Escribe la descripción de la tarea" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Agregar Tarea</button>
         </form>
 
-        <!-- Agregar aquí la lista de tareas -->
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Tarea</th>
-                    <th scope="col">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Ejemplo de tarea</td>
-                    <td>
-                        <button class="btn btn-success btn-sm">Editar</button>
-                        <button class="btn btn-danger btn-sm">Eliminar</button>
-                    </td>
-                </tr>
-                <!-- Más tareas aquí -->
-            </tbody>
-        </table>
+        <!-- Lista de tareas existentes -->
+        <ul class="list-group my-4">
+            {% for task in tasks %}
+                <li class="list-group-item">
+                    <h5>{{ task.name }}</h5>
+                    <p>{{ task.description }}</p>
+                    <form method="post" action="{% url 'delete_task' task.id %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Eliminar Tarea</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
